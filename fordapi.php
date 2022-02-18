@@ -179,23 +179,6 @@ class FordAPI
         }
     }
 
-    public function OTAInfo(string $VIN)
-    {
-        $this->Connect();
-
-        $headers = array_merge(self::DEFAULT_HEADERS, self::API_HEADERS, self::OTA_HEADERS);
-        $url = self::OTA_ENDPOINT . '?vin=' . $VIN;
-
-        try {
-            $result = $this->request('get', $url, $headers);
-
-            return $result;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode());
-        }
-    }
-
     // Get the status of the vehicle
     public function Status(string $VIN)
     {
@@ -264,7 +247,7 @@ class FordAPI
             $Headers[] = 'Auth-Token:' . $this->accessToken;
         }
 
-$Headers[] = 'X-Identity-Authorization: Bearer ' . $this->accessToken;
+        $Headers[] = 'X-Identity-Authorization: Bearer ' . $this->accessToken;
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $Headers);
 
